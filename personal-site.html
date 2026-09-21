@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孙博文 | AI 数实融合交付 / FDE 方向</title>
+<meta name="description" content="华中科技大学工程管理硕士，PMP认证。曾在宝洁供应链从事生产运营与团队管理，后独立创业做内容电商。具备企业AI数字化转型咨询与落地、AI工作流重构与业务流程优化、企业知识库建设与智能体开发的复合能力，擅长从业务问题出发借助AI工具完成端到端交付。">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Hero 区域 ===== */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  #particleContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+    gap: 40px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+    line-height: 1.1;
+  }
+
+  .hero-content .subtitle {
+    font-size: clamp(16px, 2vw, 22px);
+    color: #666;
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .hero-content .desc {
+    font-size: 15px;
+    color: #888;
+    max-width: 480px;
+    margin-bottom: 36px;
+    line-height: 1.8;
+  }
+
+  .hero-motto {
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.4;
+    margin-bottom: 28px;
+    letter-spacing: -0.3px;
+  }
+
+  .hero-motto em {
+    font-style: italic;
+    color: #555;
+    font-weight: 600;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    pointer-events: auto;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 12px 28px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .btn-secondary {
+    padding: 12px 28px;
+    background: transparent;
+    color: #333;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.03);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== 导航 ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid #eee;
+    transition: box-shadow 0.3s ease;
+  }
+  nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 14px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: #1a1a1a; }
+  @media (max-width: 700px) { .nav-links { display: none; } }
+
+  /* ===== 内容区域 ===== */
+  .section {
+    padding: 100px 10%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section.alt {
+    background: #fff;
+    max-width: 100%;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+
+  .section.alt .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+  }
+
+  .section h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-align: center;
+  }
+
+  .section h2::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: #1a1a1a;
+    border-radius: 2px;
+    margin: 14px auto 0;
+  }
+
+  .section .section-desc {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 48px;
+    max-width: 600px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+  }
+
+  /* ===== 简介 ===== */
+  .summary-text {
+    font-size: 17px;
+    color: #555;
+    line-height: 1.9;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 36px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 20px;
+    background: #f0f0f0;
+    color: #333;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* ===== 技能 ===== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+
+  .skill-card:hover {
+    border-color: #ddd;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+
+  .skill-icon {
+    width: 44px;
+    height: 44px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .skill-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .skill-card p {
+    font-size: 14px;
+    color: #777;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ===== 经历时间线 ===== */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: #e5e5e5;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fafafa;
+    border: 3px solid #1a1a1a;
+  }
+
+  .section.alt .timeline-dot {
+    background: #fff;
+  }
+
+  .timeline-date {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .timeline-company {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+    color: #1a1a1a;
+  }
+
+  .timeline-role {
+    font-size: 15px;
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .timeline-desc ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .timeline-desc li {
+    font-size: 15px;
+    color: #666;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+    line-height: 1.7;
+  }
+
+  .timeline-desc li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+
+  .timeline-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .timeline-photos img {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+  }
+
+  .timeline-photos img:hover {
+    transform: scale(1.02);
+  }
+
+  .agri-content {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .agri-photo img {
+    width: 160px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .agri-photo img:hover {
+    transform: scale(2);
+    z-index: 20;
+    position: relative;
+  }
+
+  @media (max-width: 700px) {
+    .timeline-photos { grid-template-columns: 1fr; }
+    .agri-content { flex-direction: column; }
+    .agri-photo img { width: 100%; height: auto; }
+  }
+
+  /* ===== 项目卡片 ===== */
+  .project-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 44px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .project-name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: #1a1a1a;
+  }
+
+  .project-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #f0f0f0;
+    color: #333;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .project-link-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: #ff6fa8;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .project-link:hover {
+    background: #ff4d94;
+    transform: translateY(-2px);
+  }
+
+  .project-link-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ===== 教育 ===== */
+  .edu-list {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .edu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .edu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .edu-school { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; color: #1a1a1a; }
+  .edu-detail { font-size: 15px; color: #777; margin-top: 4px; }
+  .edu-date { font-size: 15px; color: #999; white-space: nowrap; font-weight: 500; }
+
+  .pmi-tooltip {
+    margin-top: 24px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .pmi-cert {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.92);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 50;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    padding: 8px;
+    width: 320px;
+  }
+
+  .pmi-cert::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: #fff;
+  }
+
+  .pmi-cert img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .pmi-tooltip:hover .pmi-cert {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    pointer-events: auto;
+  }
+
+  /* ===== 产品画廊 ===== */
+  .dome-section {
+    padding: 100px 10%;
+    background: #fafafa;
+    overflow: hidden;
+  }
+
+  .dome-container {
+    position: relative;
+    width: 100%;
+    height: 164px;
+    overflow: hidden;
+    cursor: grab;
+    border-radius: 16px;
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+
+  .dome-container:active { cursor: grabbing; }
+
+  .dome-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dome-hint {
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+    margin-top: 16px;
+  }
+
+  .dome-wrapper {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .dome-qrcode {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 50;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .dome-qrcode img {
+    width: 160px;
+    height: 160px;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .dome-qrcode p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .dome-wrapper:hover .dome-qrcode,
+  .dome-qrcode.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    text-align: center;
+    padding: 56px 20px;
+    color: #aaa;
+    font-size: 13px;
+    background: #fff;
+    border-top: 1px solid #eee;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 36px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .footer-contact a {
+    color: #777;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 500;
+  }
+
+  .footer-contact a:hover { color: #1a1a1a; }
+
+  .footer-copy {
+    font-size: 13px;
+    color: #aaa;
+  }
+
+  /* ===== 滚动动画 ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 900px) {
+    .hero-inner {
+      flex-direction: column-reverse;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 40px;
+      gap: 20px;
+    }
+    .hero-canvas {
+      width: 260px;
+      height: 320px;
+    }
+    .hero-content { align-items: center; }
+    .hero-buttons { justify-content: center; }
+    .hero-motto br { display: none; }
+  }
+  @media (max-width: 768px) {
+    .section { padding: 60px 24px; }
+    .section h2 { font-size: 26px; }
+    .project-card { padding: 28px; }
+    .timeline { padding-left: 28px; }
+    .timeline-dot { left: -28px; }
+    .dome-section { padding: 60px 24px; }
+    .dome-container { height: 164px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav id="nav" class="scrolled">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">孙博文</a>
+    <div class="nav-links">
+      <a href="#about">简介</a>
+      <a href="#experience">经历</a>
+      <a href="#project">项目</a>
+      <a href="#education">教育</a>
+      <a href="#skills">技能</a>
+      <a href="#products">选品</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero 区域 ===== -->
+<section class="hero" id="top">
+  <div id="particleContainer"></div>
+  <div class="hero-inner">
+    <div class="hero-content" style="transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);">
+      <span class="hero-tag">👋 Hello, I'm</span>
+      <h1>孙博文</h1>
+      <p class="subtitle">AI 数实融合交付 / FDE 方向</p>
+      <div class="hero-motto">
+        事情一旦开始，就没什么可怕。<br>
+        <em>例如，我现在有点怕死，等我死了就不怕了。</em>
+      </div>
+      <p class="desc">
+        华中科技大学工程管理硕士，PMP 认证。具备供应链管理、内容电商创业与 AI 应用开发的复合背景，擅长从业务问题出发，完成企业 AI 数字化转型咨询、AI 工作流重构与智能体开发落地的端到端交付。
+      </p>
+      <div class="hero-buttons">
+        <a href="#project" class="btn-primary">查看项目</a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="scroll-hint">SCROLL DOWN</div>
+</section>
+
+<!-- ===== 个人简介 ===== -->
+
+
+<!-- ===== 工作经历 ===== -->
+<section class="section alt" id="experience">
+  <div class="section-inner">
+    <h2>工作经历</h2>
+    
+
+    <div class="timeline">
+
+      <div class="timeline-item fade-in visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2026年6月 — 至今</div>
+        <div class="timeline-company">AI 学习者</div>
+        <div class="timeline-role">独立开发者</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>各种捣鼓，独立开发并部署了一个小游戏哄哄模拟器</li>
+          </ul>
+        </div>
+        <div class="project-link-wrapper" style="margin-top: 12px;">
+          <a href="https://lihilihi.site" target="_blank" rel="noopener" class="project-link">
+            在线访问 ↗
+          </a>
+          <a href="https://lihilihi.site" target="_blank" rel="noopener">
+            
+          </a>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2022年 — 至今</div>
+        <div class="timeline-company">独立创业 — 内容电商</div>
+        <div class="timeline-role">创始人 / 运营负责人</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>经营水果、生鲜类内容电商，运营小红书、抖音平台账号，采用产地供应商一件代发模式</li>
+            <li>负责内容生产、选品、供应链对接、付费推广和直播全流程</li>
+            <li>月销售额曾达 50万—100万元，爆款单日销售额超 10 万元</li>
+            <li>通过内容测试、差异化选品和爆款策略驱动销售转化</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2020年5月 — 2022年</div>
+        <div class="timeline-company">独立创业 — 农业种植</div>
+        <div class="timeline-role">经营者</div>
+        <div class="agri-content">
+          <div class="timeline-desc" style="flex:1;">
+            <ul>
+              <li>辞职后回乡从事农业种植约两年，独立负责种植经营决策与日常管理，完成从规划到执行的0-1项目构建</li>
+            </ul>
+          </div>
+          <div class="agri-photo">
+            <img src="农业1.jpg" alt="番茄大棚收获">
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2018年 — 2020年5月</div>
+        <div class="timeline-company">广州宝洁有限公司（P&amp;G）</div>
+        <div class="timeline-role">Product Supply Manager</div>
+        <div class="timeline-desc">
+          <ul>
+            <li>以供应链管理培训生身份入职，轮岗覆盖生产、生产计划、物流等模块，第二年晋升为 Product Supply Manager</li>
+            <li>带领 4 人团队，负责供应链与生产端的降本增效机会挖掘及方案落地</li>
+            <li>代表项目：定制化礼品生产线降本改造 — 深入现场拆解生产流程，推动包装结构优化（取消独立小盒改一体化礼盒），实现产线整体成本降低约 30%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI 项目 ===== -->
+
+
+<!-- ===== 教育背景 ===== -->
+<section class="section alt" id="education">
+  <div class="section-inner">
+    <h2>教育背景</h2>
+    <p class="section-desc fade-in visible">华中科技大学本硕连读，工程管理专业</p>
+
+    <div class="edu-list fade-in visible">
+      <div class="edu-item">
+        <div>
+          <div class="edu-school">华中科技大学</div>
+          <div class="edu-detail">工程管理（硕士）</div>
+        </div>
+        <div class="edu-date">2015年 — 2018年</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-school">华中科技大学</div>
+          <div class="edu-detail">工程管理（本科）</div>
+        </div>
+        <div class="edu-date">2011年 — 2015年</div>
+      </div>
+      <div style="margin-top: 24px; text-align: center;" class="pmi-tooltip">
+        <span class="tag">PMP 认证（2020年取得）</span>
+        <div class="pmi-cert">
+          <img src="pmi-cert.png" alt="PMP 认证证书">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 技能 ===== -->
+<section class="section" id="skills">
+  <h2>技能与工具</h2>
+  <p class="section-desc fade-in visible">企业 AI 落地交付的复合技能栈</p>
+
+  <div class="skills-grid">
+    <div class="skill-card fade-in visible">
+      <div class="skill-icon">🤖</div>
+      <h3>AI 工作流重构</h3>
+      <p>熟练使用 Codex、Trae、WorkBuddy 等 AI 编程工具，具备 AI 驱动的业务流程重构与工作流优化实战经验</p>
+    </div>
+    <div class="skill-card fade-in visible">
+      <div class="skill-icon">🧠</div>
+      <h3>大模型应用与智能体开发</h3>
+      <p>大模型 API 调用、提示词设计、状态管理与评分规则、AI 语音服务接入，具备智能体开发与企业知识库建设能力</p>
+    </div>
+    <div class="skill-card fade-in visible">
+      <div class="skill-icon">☁️</div>
+      <h3>部署交付与运维陪跑</h3>
+      <p>Vercel 部署、腾讯云 EdgeOne 迁移与配置、人机验证接入，具备项目上线后的运维排查与陪跑能力</p>
+    </div>
+    <div class="skill-card fade-in visible">
+      <div class="skill-icon">📋</div>
+      <h3>项目管理与交付</h3>
+      <p>PMP 认证，4 人团队管理经验，跨环节任务拆解与端到端交付推进，可驻场交付</p>
+    </div>
+    <div class="skill-card fade-in visible">
+      <div class="skill-icon">💡</div>
+      <h3>企业 AI 转型咨询</h3>
+      <p>从业务问题出发，完成企业 AI 数字化转型咨询、业务梳理、流程定制与 0-1 项目构建</p>
+    </div>
+    <div class="skill-card fade-in visible">
+      <div class="skill-icon">🛒</div>
+      <h3>业务流程优化</h3>
+      <p>供应链管理、内容电商全流程运营经验，擅长数据驱动的业务流程优化与转化漏斗提升</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 产品画廊 ===== -->
+<section class="section alt" id="products">
+  <div class="section-inner">
+    <h2>我们店铺的水果</h2>
+    <p class="section-desc fade-in visible">不好吃包退 · 产地直供 · 新鲜到家</p>
+    <div class="dome-wrapper" id="domeWrapper">
+      <div class="dome-container" id="domeContainer">
+        <canvas class="dome-canvas" id="domeCanvas" width="856" height="164" style="width: 856px; height: 164px;"></canvas>
+      </div>
+      <div class="dome-qrcode" id="domeQrcode" style="opacity: 0; transform: translate(-50%, -50%) scale(0.8);">
+        <img src="shop-qrcode.png" alt="店铺二维码">
+        <p>扫码进店选购</p>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="footer-contact">
+    <span>📍 武汉</span>
+  </div>
+  <div class="footer-copy">© 2025 孙博文. 保留所有权利.</div>
+</footer>
+
+<script src="particle-image.js"></script>
+<script>
+  // 清理残留的 canvas 元素（防止浏览器保存页面时写入的残留 DOM）
+  document.querySelectorAll('#particleContainer canvas').forEach(c => c.remove());
+
+  // 初始化粒子效果 —— 白色背景 + 灰色粒子（完整保留 personal-site 动效配置）
+  const particleImg = new ParticleImage('#particleContainer', {
+    image: '个人图片.png',
+
+    // 粒子
+    particleCount: 18000,
+    particleSize: 1.4,
+    particleOpacity: 0.7,
+    minBrightness: 10,
+    minAlpha: 20,
+
+    // 流场
+    noiseStrength: 0.3,
+    noiseScale: 0.0012,
+    flowSpeed: 0.7,
+
+    // 物理
+    springForce: 0.015,
+    damping: 0.96,
+
+    // 鼠标交互
+    cursorStrength: 2.0,
+    cursorRadius: 150,
+    cursorRepel: 1.8,
+    cursorSwirl: 0.6,
+    cursorVelocity: 0.1,
+    trailLength: 8,
+
+    // 视觉 —— 白色背景 + 灰色粒子
+    imageOpacity: 0,
+    backgroundColor: '#ffffff',
+    additiveBlend: false,
+    motionStreaks: true,
+    grayscale: true,
+    grayscaleRange: [40, 130],
+    invert: false,
+    imageScale: 0.85,
+    imagePosX: 0.65,
+  });
+
+  particleImg.init().catch(err => {
+    console.error('Particle image failed:', err);
+  });
+
+  // 导航阴影
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // 滚动淡入动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ===== 水果产品画廊（穹顶效果）=====
+  (function() {
+    const container = document.getElementById('domeContainer');
+    const canvas = document.getElementById('domeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let images = [];
+    let offsetX = 0, offsetY = 0;
+    let isDragging = false;
+    let mouseInDome = false;
+    let lastX, lastY;
+    let velocityX = 0, velocityY = 0;
+
+    const TILE_W = 140;
+    const TILE_H = 140;
+    const GAP = 12;
+    const CURVE = 0.35;
+    const CURVE_RADIUS = 1.4;
+    const ZOOM = 0.12;
+    const SEGMENTS = 8;
+    const FRICTION = 0.90;
+    const VIGNETTE = 0.35;
+    const BORDER_RADIUS = 12;
+
+    const IMAGE_URLS = [
+      "images/1040g0o030t57bpunk60048be9h50hvkm967u92g.jpg","images/1040g0o031laftum0l00048be9h50hvkml1p51ig.jpg","images/104100ao315i5k4dtioem6959q9ig2s0004is9frua4m2g.jpg","images/6b0e5bdd984db6bf8d1916d51edda185.jpg",
+      "images/M1R1RUtWTjh1aUlrT0NDMGxmakN4b2xDNWpQZHBTYU9aRXBZclgxMU51SWdXaFRPRkkwSlJ3PT0.jpg","images/O1CN01qp2raV20szrYMv2Wm_!!2207841896906.jpg","images/双拼.jpg","images/微信图片_20220915220041_副本.jpg",
+      "images/微信图片_20220923162601.jpg","images/微信图片_20230517003313 - 副本.jpg","images/微信图片_20230612210534.jpg","images/微信图片_20230722225435_副本.jpg",
+      "images/微信图片_20230911190438.jpg","images/微信图片_20231031213613.jpg","images/微信图片_20231105085736.jpg","images/微信图片_20231119215502.jpg",
+      "images/微信图片_20231211222011.jpg","images/微信图片_20231216183854.jpg","images/微信图片_20231216191922.jpg","images/微信图片_20240214210912.jpg",
+      "images/微信图片_20240404151010.jpg","images/微信图片_20250313182542.jpg","images/微信图片_20250316222126.jpg","images/微信图片_20250412124153.jpg",
+      "images/微信图片_20250423222121.jpg","images/微信图片_20250430150426.jpg","images/微信图片_20250507211718.jpg","images/微信图片_20250512164447.jpg",
+      "images/微信图片_20250519001235.jpg","images/微信图片_20250530224959.jpg","images/微信图片_20250621224806.jpg","images/微信图片_20250718210633.jpg",
+      "images/微信图片_20250923173552_59_1.jpg","images/微信图片_20251014011547_83_1.jpg","images/微信图片_20260118155949_207_1.jpg","images/微信图片_20260801184312_9_2.jpg",
+      "images/微信图片_20260802135356_38_2.jpg","images/微信图片_20260802152457_53_2.jpg","images/微信图片_20260816201042_80_2.jpg","images/微信图片_20260915170206_210_2.jpg"
+    ];
+
+    function resize() {
+      const rect = container.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      const dpr = Math.min(window.devicePixelRatio, 2);
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function loadImages() {
+      IMAGE_URLS.forEach((url, i) => {
+        const img = new Image();
+        img.onload = () => { images[i] = img; };
+        img.onerror = () => {};
+        img.src = url;
+      });
+      setTimeout(() => {
+        images = images.filter(img => img && img.complete && img.naturalWidth > 0);
+        if (images.length === 0) {
+          for (let i = 0; i < 20; i++) images.push(null);
+        }
+      }, 2000);
+    }
+
+    function getImg(row, col) {
+      const idx = ((row * 7 + col) % images.length + images.length) % images.length;
+      return images[idx];
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+      const cols = Math.ceil(width / (TILE_W + GAP)) + 4;
+      const imgY = (height - TILE_H) / 2;
+
+      for (let col = -2; col < cols; col++) {
+        const imgX = col * (TILE_W + GAP) + (offsetX % (TILE_W + GAP));
+        const img = getImg(0, col);
+        if (!img) continue;
+        if (imgX + TILE_W < -20 || imgX > width + 20) continue;
+
+        ctx.save();
+        ctx.drawImage(img, 0, 0, img.naturalWidth || TILE_W, img.naturalHeight || TILE_H,
+          imgX, imgY, TILE_W, TILE_H);
+        ctx.restore();
+      }
+    }
+
+    function animate() {
+      if (!isDragging) {
+        offsetX += velocityX;
+        offsetY += velocityY;
+        velocityX *= FRICTION;
+        velocityY *= FRICTION;
+
+        if (Math.abs(velocityX) < 0.3 && Math.abs(velocityY) < 0.3) {
+          velocityX += 0.12;
+          velocityY += 0.06;
+        }
+      }
+
+      render();
+      requestAnimationFrame(animate);
+    }
+
+    container.addEventListener('mousedown', e => {
+      isDragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      velocityX = 0;
+      velocityY = 0;
+    });
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      offsetX += dx * 1.2;
+      offsetY += dy * 1.2;
+      velocityX = dx * 1.2;
+      velocityY = dy * 1.2;
+      lastX = e.clientX;
+      lastY = e.clientY;
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    container.addEventListener('touchstart', e => {
+      isDragging = true;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+      velocityX = 0;
+      velocityY = 0;
+    }, { passive: true });
+    window.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      const dx = e.touches[0].clientX - lastX;
+      const dy = e.touches[0].clientY - lastY;
+      offsetX += dx * 1.2;
+      offsetY += dy * 1.2;
+      velocityX = dx * 1.2;
+      velocityY = dy * 1.2;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+    }, { passive: true });
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    container.addEventListener('mousemove', e => {
+      const rect = container.getBoundingClientRect();
+      mouseInDome = true;
+    });
+    container.addEventListener('mouseleave', () => { mouseInDome = false; });
+    container.addEventListener('mouseenter', () => { mouseInDome = true; });
+
+    // 二维码悬停显示
+    const qrcode = document.getElementById('domeQrcode');
+    const wrapper = document.getElementById('domeWrapper');
+    wrapper.addEventListener('mouseenter', () => {
+      qrcode.style.opacity = '1';
+      qrcode.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+    wrapper.addEventListener('mouseleave', () => {
+      qrcode.style.opacity = '0';
+      qrcode.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    });
+
+    window.addEventListener('resize', resize);
+
+    resize();
+    loadImages();
+    animate();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+</body></html>
