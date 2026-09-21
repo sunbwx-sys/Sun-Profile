@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2a6c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d0a3e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00a8cc;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="4" y="4" width="56" height="56" rx="14" ry="14" fill="url(#bgGrad)"/>
+  <!-- Inner subtle border glow -->
+  <rect x="4.5" y="4.5" width="55" height="55" rx="13.5" ry="13.5" fill="none" stroke="#00f0ff" stroke-width="0.5" opacity="0.3"/>
+  <!-- AI text -->
+  <g filter="url(#glow)" fill="url(#textGrad)" font-family="Arial, sans-serif" font-weight="900" font-size="28" text-anchor="middle">
+    <text x="32" y="40" letter-spacing="-1">AI</text>
+  </g>
+</svg>
