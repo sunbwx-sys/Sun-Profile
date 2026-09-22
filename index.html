@@ -1084,16 +1084,16 @@
     const BORDER_RADIUS = 12;
 
     const IMAGE_URLS = [
-      "images/1040g0o030t57bpunk60048be9h50hvkm967u92g.jpg","images/1040g0o031laftum0l00048be9h50hvkml1p51ig.jpg","images/104100ao315i5k4dtioem6959q9ig2s0004is9frua4m2g.jpg","images/6b0e5bdd984db6bf8d1916d51edda185.jpg",
-      "images/M1R1RUtWTjh1aUlrT0NDMGxmakN4b2xDNWpQZHBTYU9aRXBZclgxMU51SWdXaFRPRkkwSlJ3PT0.jpg","images/O1CN01qp2raV20szrYMv2Wm_!!2207841896906.jpg","images/双拼.jpg","images/微信图片_20220915220041_副本.jpg",
-      "images/微信图片_20220923162601.jpg","images/微信图片_20230517003313 - 副本.jpg","images/微信图片_20230612210534.jpg","images/微信图片_20230722225435_副本.jpg",
-      "images/微信图片_20230911190438.jpg","images/微信图片_20231031213613.jpg","images/微信图片_20231105085736.jpg","images/微信图片_20231119215502.jpg",
-      "images/微信图片_20231211222011.jpg","images/微信图片_20231216183854.jpg","images/微信图片_20231216191922.jpg","images/微信图片_20240214210912.jpg",
-      "images/微信图片_20240404151010.jpg","images/微信图片_20250313182542.jpg","images/微信图片_20250316222126.jpg","images/微信图片_20250412124153.jpg",
-      "images/微信图片_20250423222121.jpg","images/微信图片_20250430150426.jpg","images/微信图片_20250507211718.jpg","images/微信图片_20250512164447.jpg",
-      "images/微信图片_20250519001235.jpg","images/微信图片_20250530224959.jpg","images/微信图片_20250621224806.jpg","images/微信图片_20250718210633.jpg",
-      "images/微信图片_20250923173552_59_1.jpg","images/微信图片_20251014011547_83_1.jpg","images/微信图片_20260118155949_207_1.jpg","images/微信图片_20260801184312_9_2.jpg",
-      "images/微信图片_20260802135356_38_2.jpg","images/微信图片_20260802152457_53_2.jpg","images/微信图片_20260816201042_80_2.jpg","images/微信图片_20260915170206_210_2.jpg"
+      "images_small/1040g0o030t57bpunk60048be9h50hvkm967u92g.jpg","images_small/1040g0o031laftum0l00048be9h50hvkml1p51ig.jpg","images_small/104100ao315i5k4dtioem6959q9ig2s0004is9frua4m2g.jpg","images_small/6b0e5bdd984db6bf8d1916d51edda185.jpg",
+      "images_small/M1R1RUtWTjh1aUlrT0NDMGxmakN4b2xDNWpQZHBTYU9aRXBZclgxMU51SWdXaFRPRkkwSlJ3PT0.jpg","images_small/O1CN01qp2raV20szrYMv2Wm_!!2207841896906.jpg","images_small/双拼.jpg","images_small/微信图片_20220915220041_副本.jpg",
+      "images_small/微信图片_20220923162601.jpg","images_small/微信图片_20230517003313 - 副本.jpg","images_small/微信图片_20230612210534.jpg","images_small/微信图片_20230722225435_副本.jpg",
+      "images_small/微信图片_20230911190438.jpg","images_small/微信图片_20231031213613.jpg","images_small/微信图片_20231105085736.jpg","images_small/微信图片_20231119215502.jpg",
+      "images_small/微信图片_20231211222011.jpg","images_small/微信图片_20231216183854.jpg","images_small/微信图片_20231216191922.jpg","images_small/微信图片_20240214210912.jpg",
+      "images_small/微信图片_20240404151010.jpg","images_small/微信图片_20250313182542.jpg","images_small/微信图片_20250316222126.jpg","images_small/微信图片_20250412124153.jpg",
+      "images_small/微信图片_20250423222121.jpg","images_small/微信图片_20250430150426.jpg","images_small/微信图片_20250507211718.jpg","images_small/微信图片_20250512164447.jpg",
+      "images_small/微信图片_20250519001235.jpg","images_small/微信图片_20250530224959.jpg","images_small/微信图片_20250621224806.jpg","images_small/微信图片_20250718210633.jpg",
+      "images_small/微信图片_20250923173552_59_1.jpg","images_small/微信图片_20251014011547_83_1.jpg","images_small/微信图片_20260118155949_207_1.jpg","images_small/微信图片_20260801184312_9_2.jpg",
+      "images_small/微信图片_20260802135356_38_2.jpg","images_small/微信图片_20260802152457_53_2.jpg","images_small/微信图片_20260816201042_80_2.jpg","images_small/微信图片_20260915170206_210_2.jpg"
     ];
 
     function resize() {
@@ -1130,12 +1130,16 @@
 
     function render() {
       ctx.clearRect(0, 0, width, height);
-      const cols = Math.ceil(width / (TILE_W + GAP)) + 4;
+      const tileStep = TILE_W + GAP;
+      const cols = Math.ceil(width / tileStep) + 4;
       const imgY = (height - TILE_H) / 2;
+      const baseCol = Math.floor(offsetX / tileStep);
+      const subPx = offsetX - baseCol * tileStep;
 
       for (let col = -2; col < cols; col++) {
-        const imgX = col * (TILE_W + GAP) + (offsetX % (TILE_W + GAP));
-        const img = getImg(0, col);
+        const tileIdx = baseCol + col;
+        const imgX = col * tileStep + subPx;
+        const img = getImg(0, tileIdx);
         if (!img) continue;
         if (imgX + TILE_W < -20 || imgX > width + 20) continue;
 
@@ -1154,7 +1158,7 @@
         velocityY *= FRICTION;
 
         if (Math.abs(velocityX) < 0.3 && Math.abs(velocityY) < 0.3) {
-          velocityX += 0.12;
+          velocityX -= 0.12;
           velocityY += 0.06;
         }
       }
