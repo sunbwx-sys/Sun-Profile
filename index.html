@@ -1079,9 +1079,10 @@
     const CURVE_RADIUS = 1.4;
     const ZOOM = 0.12;
     const SEGMENTS = 8;
-    const FRICTION = 0.90;
+    const FRICTION = 0.95;
     const VIGNETTE = 0.35;
     const BORDER_RADIUS = 12;
+    const AUTO_SPEED = -0.5;
 
     const IMAGE_URLS = [
       "images_small/1040g0o030t57bpunk60048be9h50hvkm967u92g.jpg","images_small/1040g0o031laftum0l00048be9h50hvkml1p51ig.jpg","images_small/104100ao315i5k4dtioem6959q9ig2s0004is9frua4m2g.jpg","images_small/6b0e5bdd984db6bf8d1916d51edda185.jpg",
@@ -1115,15 +1116,10 @@
         img.onerror = () => {};
         img.src = url;
       });
-      setTimeout(() => {
-        images = images.filter(img => img && img.complete && img.naturalWidth > 0);
-        if (images.length === 0) {
-          for (let i = 0; i < 20; i++) images.push(null);
-        }
-      }, 2000);
     }
 
     function getImg(row, col) {
+      if (images.length === 0) return null;
       const idx = ((row * 7 + col) % images.length + images.length) % images.length;
       return images[idx];
     }
@@ -1157,9 +1153,11 @@
         velocityX *= FRICTION;
         velocityY *= FRICTION;
 
-        if (Math.abs(velocityX) < 0.3 && Math.abs(velocityY) < 0.3) {
-          velocityX -= 0.12;
-          velocityY += 0.06;
+        if (Math.abs(velocityX) < Math.abs(AUTO_SPEED) * 1.5) {
+          velocityX += (AUTO_SPEED - velocityX) * 0.05;
+        }
+        if (Math.abs(velocityY) < 0.15) {
+          velocityY *= 0.9;
         }
       }
 
